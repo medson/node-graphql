@@ -16,6 +16,10 @@ const resolvers = {
     info: () => 'This is the API of a Hackernews Clone',
     // 2
     feed: () => links,
+    findLink: (parent, args) => {
+      const link = links.filter(link => link.id === args.id);
+      return link;
+    },
   },
 
   Mutation: {
