@@ -5,9 +5,11 @@ import User from '../../../models/User';
 export default {
   Query: {
     user: (root, args) => new Promise((resolve, reject) => {
-      User.findOne(args).exec((err, res) => {
-        err ? reject(err) : resolve(res);
-      });
+      User.findOne({ $or: [{ name: new RegExp(args.name, 'i') }, { id: args.id }] }).exec(
+        (err, res) => {
+          err ? reject(err) : resolve(res);
+        },
+      );
     }),
     users: () => new Promise((resolve, reject) => {
       User.find({})
@@ -18,7 +20,8 @@ export default {
     }),
   },
   Mutation: {
-    addUser: (root, { id, name, email }) => {
+    // TO DO: modify user create and change promisses
+    signUp: (root, { id, name, email }) => {
       const newUser = new User({ id, name, email });
 
       return new Promise((resolve, reject) => {
@@ -27,11 +30,13 @@ export default {
         });
       });
     },
+
     editUser: (root, { id, name, email }) => new Promise((resolve, reject) => {
       User.findOneAndUpdate({ id }, { $set: { name, email } }).exec((err, res) => {
         err ? reject(err) : resolve(res);
       });
     }),
+
     deleteUser: (root, args) => new Promise((resolve, reject) => {
       User.findOneAndRemove(args).exec((err, res) => {
         err ? reject(err) : resolve(res);
