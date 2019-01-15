@@ -1,17 +1,13 @@
-// const express = require('express');
-// const graphqlHTTP = require('express-graphql');
-// const { buildSchema } = require('graphql');
-// const schema = require('./app/graphAPI/schema');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./app/graphAPI/schema');
 
-// /**
-//  * Routes
-//  */
-// (
-//   '/api',
-//   graphqlHTTP({
-//     schema,
-//     graphiql: true,
-//   }),
-// )
+/**
+ * Routes
+ */
+const routes = ('/api',
+graphqlHTTP({
+  schema,
+  graphiql: true,
+}));
 
-// module.exports = routes;
+module.exports = routes;
