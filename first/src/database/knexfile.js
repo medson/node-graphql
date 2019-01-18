@@ -1,5 +1,4 @@
 // Update with your config settings.
-
 module.exports = {
   client: process.env.DB_CLIENT,
   connection: {

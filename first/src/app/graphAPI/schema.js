@@ -1,5 +1,5 @@
-const resolvers = require('./resolvers');
 const { makeExecutableSchema } = require('graphql-tools');
+const resolvers = require('./resolvers');
 
 const usersAttribs = `
     id: ID
@@ -12,6 +12,10 @@ const typeDefs = `
     type User {
       ${usersAttribs}
     }
+    type AuthPayload {
+        token: String
+        user: User
+    }
     type Query {
         getUser(id: ID!): User
         getUsers: [User]
@@ -20,6 +24,8 @@ const typeDefs = `
       ${usersAttribs}
     }
     type Mutation {
+        signup(email: String!, password: String!, name: String!): AuthPayload
+        login(email: String!, password: String!): AuthPayload
         createUser(input: UserInput): User
     }
 `;

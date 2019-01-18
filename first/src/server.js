@@ -2,7 +2,7 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 const schema = require('./app/graphAPI/schema');
-// const settings = require('./config/settings');
+const db = require('./database/connect');
 
 class App {
   constructor() {
@@ -30,6 +30,10 @@ class App {
       graphqlHTTP({
         schema,
         graphiql: true,
+        context: request => ({
+          ...request,
+          db,
+        }),
       }),
     );
   }
